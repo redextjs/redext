@@ -1,7 +1,9 @@
+import type { PluginConfig } from '../../types';
+
 const validateConfig = (config) => {
 }
 
-export default (config = {}) => {
+export default (config: PluginConfig = {}) => {
   const modelName = config.name || 'loading';
 
   const loading = {

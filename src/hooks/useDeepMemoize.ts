@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import deepEqual from '../utils/deepEqual';
 
 const useDeepMemoize = (value) => {

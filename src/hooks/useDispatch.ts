@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import Context from '../Context';
 
+import type { ContextValue } from '../types';
+
 export default function useDispatch() {
-  const { dispatch } = useContext(Context);
+  const { dispatch }: ContextValue = useContext(Context);
 
   return dispatch;
 }

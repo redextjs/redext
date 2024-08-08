@@ -1,8 +1,10 @@
+import type { InitConfig, Action, ModelDispatchers, Model } from './types';
+
 function merge(original, extra) {
   return extra ? { ...extra, ...original } : original
 }
 
-export default function createStore(config = {}) {
+export default function createStore(config: InitConfig) {
   const { plugins = [] } = config;
 
   plugins.forEach((plugin) => {
@@ -35,7 +37,7 @@ export default function createStore(config = {}) {
     return newInitialState;
   };
 
-  const getReducer = (state = {}, action = {}) => {
+  const getReducer = (state = {}, action: Action = {}) => {
     const newState = {};
 
     Object.keys(models).forEach((modelFilename) => {
@@ -61,12 +63,12 @@ export default function createStore(config = {}) {
     const newEffects = {};
 
     Object.keys(models).forEach((modelFilename) => {
-      const modelDispatcher = {};
-      const model = models[modelFilename] || {};
+      const modelDispatcher: ModelDispatchers = {};
+      const model: Model = models[modelFilename] || {};
 
       const {
         reducers = {},
-        effects: effectsFromConfig = {},
+        effects: effectsFromConfig,
         name: modelName = modelFilename
       } = model;
 
@@ -102,7 +104,7 @@ export default function createStore(config = {}) {
       if (typeof effectsFromConfig === 'function') {
         effects = effectsFromConfig(dispatch)
       } else {
-        effects = effectsFromConfig;
+        effects = effectsFromConfig || {};
       }
 
       const effectObj = {};

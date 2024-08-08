@@ -4,7 +4,6 @@ import connect from './connect';
 import memoize from './memoize';
 import useDispatch from './hooks/useDispatch';
 import useSelector from './hooks/useSelector';
-import useContextSelector from './hooks/useContextSelector';
 import useDispatcher from './hooks/useDispatcher';
 import useDeepEffect from './hooks/useDeepEffect';
 import useDeepIsomorphicLayoutEffect from './hooks/useDeepIsomorphicLayoutEffect';
@@ -13,7 +12,9 @@ import useDeepMemo from './hooks/useDeepMemo';
 import isEqual from './utils/isEqual';
 import deepEqual from './utils/deepEqual';
 
-const init = (config) => {
+import type { InitConfig } from './types';
+
+const init = (config: InitConfig) => {
   return createStore(config)
 };
 

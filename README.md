@@ -64,7 +64,7 @@ export default {
 ```
 
 ```js
-// store/models/index.js
+// store/models/index.ts
 import common from './common';
 import auth from './auth';
 
@@ -75,7 +75,7 @@ export default {
 ```
 
 ```js
-// store/index.js
+// store/index.ts
 import { Provider, connect, init, models } from 'redext';
 
 import models from './models';
@@ -84,7 +84,7 @@ export { Provider, connect, init, models }
 ```
 
 ```js
-// client/index.js
+// client/index.ts
 import { Provider, init, models } from './store';
 
 const store = init({

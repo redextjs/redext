@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import useDeepMemoize from './useDeepMemoize';
 import checkDeps from '../utils/checkDeps';
 

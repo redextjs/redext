@@ -2,11 +2,13 @@ import { useContext, useSyncExternalStore } from 'react';
 import Context from '../Context';
 import useDeepMemo from './useDeepMemo';
 
-const useContextSelector = (mapStateToProps, params = {}) => {
+import type { ContextSelectorParams, ContextValue } from '../types';
+
+const useContextSelector = (mapStateToProps, params: ContextSelectorParams = {}) => {
   const { isWithSyncExternalStore = true } = params;
 
   if (isWithSyncExternalStore && useSyncExternalStore) {
-    const { subscribe, getState } = useContext(Context);
+    const { subscribe, getState }: ContextValue = useContext(Context);
     const getSnapshot = () => {
       if (!mapStateToProps) {
         return undefined
@@ -20,7 +22,7 @@ const useContextSelector = (mapStateToProps, params = {}) => {
     return useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
   }
 
-  const { state = {} } = useContext(Context);
+  const { state = {} }: ContextValue = useContext(Context);
 
   let filteredState = {};
 

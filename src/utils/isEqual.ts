@@ -93,7 +93,7 @@ function equal(a, b) {
 export default function exportedEqual(a, b) {
   try {
     return equal(a, b);
-  } catch (error) {
+  } catch (error: any) {
     if ((error.message && error.message.match(/stack|recursion/i)) || (error.number === -2146828260)) {
       console.warn('Warning: isEqual does not handle circular references.', error.name, error.message);
 

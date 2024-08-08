@@ -41,7 +41,7 @@ const equal = (a, b) => {
 export default function deepEqual(a, b) {
   try {
     return equal(a, b);
-  } catch (error) {
+  } catch (error: any) {
     if ((error.message && error.message.match(/stack|recursion/i)) || (error.number === -2146828260)) {
       console.warn('Warning: deepEqual does not handle circular references.', error.name, error.message);
 

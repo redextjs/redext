@@ -1,15 +1,17 @@
 {
   "name": "redext",
-  "version": "0.0.17",
+  "version": "0.1.0",
   "description": "A simple global store based on React Context and Hooks",
-  "main": "./dist/index.js",
-  "module": "./dist/esm/index.mjs",
-  "exports": {
-    "require": "./dist/cjs/index.js",
-    "import": "./dist/esm/index.mjs"
-  },
-  "scripts": {
-    "build": "rollup -c"
+  "author": "",
+  "homepage": "https://github.com/redextjs/redext",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "react",
@@ -18,21 +20,26 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/toiladoong/redext.git"
+    "url": "https://github.com/redextjs/redext.git"
   },
-  "homepage": "https://github.com/toiladoong/redext",
-  "dependencies": {
-    "@rollup/plugin-strip": "^2.0.0",
-    "rollup-plugin-local-resolve": "^1.0.7",
-    "rollup-plugin-terser": "^7.0.2"
+  "scripts": {
+    "build": "yarn clean && tsup src --dts",
+    "dev": "pnpm build:fast --watch",
+    "clean": "rimraf dist .turbo",
+    "typecheck": "tsc --noEmit",
+    "build:fast": "tsup src",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore"
   },
+  "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0",
-    "rollup": "^2.32.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "typescript": "^4.2.4"
-  }
+    "@types/node": "^22.1.0",
+    "@types/react": "^18.3.3",
+    "clean-package": "^2.2.0",
+    "react": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4"
+  },
+  "clean-package": "./clean-package.config.json"
 }

@@ -57,7 +57,7 @@ const Provider = (props) => {
 
       dispatcher(arg);
 
-      listeners.forEach((l) => l());
+      listeners.forEach((l: any) => l());
     },
     effects
   };
