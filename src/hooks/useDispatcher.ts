@@ -3,7 +3,7 @@ import Context from '../Context';
 
 import type { ContextValue } from '../types';
 
-const useDispatcher = (mapDispatchToProps) => {
+const useDispatcher = (mapDispatchToProps: any) => {
   const { dispatch, effects }: ContextValue = useContext(Context);
 
   let filteredDispatch = {};

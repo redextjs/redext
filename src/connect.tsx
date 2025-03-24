@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, ComponentType } from 'react';
 import Context from './Context';
 import useContextSelector from './hooks/useContextSelector';
 import useDispatcher from './hooks/useDispatcher';
 
 import type { ContextValue } from './types';
 
-const connect = (mapStateToProps, mapDispatchToProps) => Component => {
-  return props => {
+const connect = <T extends unknown>(mapStateToProps: any, mapDispatchToProps: any) => (Component: ComponentType<T>): ComponentType<T> => {
+  return (props: any) => {
     const { dispatch }: ContextValue = useContext(Context);
 
     const memoState = useContextSelector(mapStateToProps, {

@@ -2,7 +2,7 @@ import React from 'react';
 import useDeepMemoize from './useDeepMemoize';
 import checkDeps from '../utils/checkDeps';
 
-const useDeepMemo = (factory, dependencies) => {
+const useDeepMemo = (factory: any, dependencies: any) => {
   if (process.env.NODE_ENV !== 'production') {
     checkDeps(dependencies, 'useDeepMemo');
   }

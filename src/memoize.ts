@@ -1,7 +1,7 @@
 import React from 'react';
 import isEqual from './utils/isEqual';
 
-const shallowDiffers = (prev, next) => {
+const shallowDiffers = (prev: any, next: any) => {
   for (let attribute in prev) {
     if (!(attribute in next)) {
       return true;
@@ -15,14 +15,14 @@ const shallowDiffers = (prev, next) => {
   return false;
 };
 
-const areEqual = (prevProps, nextProps) => {
+const areEqual = (prevProps: any, nextProps: any) => {
   const { style: prevStyle, ...prevRest } = prevProps;
   const { style: nextStyle, ...nextRest } = nextProps;
 
   return !shallowDiffers(prevStyle, nextStyle) && !shallowDiffers(prevRest, nextRest)
 };
 
-const memoize = (Component, memoPropsAreEqual = areEqual) => {
+const memoize = (Component: any, memoPropsAreEqual = areEqual) => {
   return React.memo(Component, memoPropsAreEqual)
 };
 

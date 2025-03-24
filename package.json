@@ -1,6 +1,6 @@
 {
   "name": "redext",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple global store based on React Context and Hooks",
   "author": "",
   "homepage": "https://github.com/redextjs/redext",

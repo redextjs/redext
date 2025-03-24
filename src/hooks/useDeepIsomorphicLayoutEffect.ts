@@ -4,7 +4,7 @@ import checkDeps from '../utils/checkDeps';
 
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
-const useDeepIsomorphicLayoutEffect = (effect, dependencies) => {
+const useDeepIsomorphicLayoutEffect = (effect: any, dependencies: any) => {
   if (process.env.NODE_ENV !== 'production') {
     checkDeps(dependencies, 'useDeepEffect');
   }

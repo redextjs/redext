@@ -4,7 +4,7 @@ import useDeepMemo from './useDeepMemo';
 
 import type { ContextSelectorParams, ContextValue } from '../types';
 
-const useContextSelector = (mapStateToProps, params: ContextSelectorParams = {}) => {
+const useContextSelector = (mapStateToProps: any, params: ContextSelectorParams = {}) => {
   const { isWithSyncExternalStore = true } = params;
 
   if (isWithSyncExternalStore && useSyncExternalStore) {

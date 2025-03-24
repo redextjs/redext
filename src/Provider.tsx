@@ -1,14 +1,17 @@
 import React, { useReducer, useRef } from 'react';
+import type { Action } from './types';
 import Context from './Context';
 
-const Provider = (props) => {
+type Listener = () => void;
+
+const Provider = (props: any) => {
   const { store, ...providerProps } = props;
 
   if (!store) {
     throw new Error('Please use <Provider store={...} initialValue={...}>');
   }
 
-  const listeners = new Set();
+  const listeners = new Set<Listener>();
 
   const initialState = store.getState(props.initialValue);
 
@@ -24,7 +27,7 @@ const Provider = (props) => {
 
   const { effects, dispatch: dispatcher, models, on } = store.getEffect(dispatch, state);
 
-  const subscribe = (listener) => {
+  const subscribe = (listener: Listener) => {
     listeners.add(listener);
 
     return () => {
@@ -36,8 +39,8 @@ const Provider = (props) => {
     subscribe,
     getState,
     state: getState(),
-    dispatch: (arg) => {
-      on('onModel', (onModel) => {
+    dispatch: (arg: Action) => {
+      on('onModel', (onModel: any) => {
         const type = arg?.type;
         const types = type.split('/');
         const modelName = types[0];
@@ -57,7 +60,7 @@ const Provider = (props) => {
 
       dispatcher(arg);
 
-      listeners.forEach((l: any) => l());
+      listeners.forEach((listener: any) => listener());
     },
     effects
   };
