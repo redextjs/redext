@@ -18,6 +18,10 @@ const init = <TModels extends Models<TModels>>(config: InitConfig<TModels>): Sto
   return createStore<TModels>(config)
 };
 
+export type {
+  Models
+}
+
 export {
   Provider,
   connect,
