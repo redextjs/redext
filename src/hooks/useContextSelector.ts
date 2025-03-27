@@ -8,7 +8,7 @@ const useContextSelector = (mapStateToProps: any, params: ContextSelectorParams 
   const { isWithSyncExternalStore = true } = params;
 
   if (isWithSyncExternalStore && useSyncExternalStore) {
-    const { subscribe, getState }: ContextValue = useContext(Context);
+    const { subscribe, getState }: ContextValue<any> = useContext(Context);
     const getSnapshot = () => {
       if (!mapStateToProps) {
         return undefined
@@ -22,7 +22,7 @@ const useContextSelector = (mapStateToProps: any, params: ContextSelectorParams 
     return useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
   }
 
-  const { state = {} }: ContextValue = useContext(Context);
+  const { state = {} }: ContextValue<any> = useContext(Context);
 
   let filteredState = {};
 

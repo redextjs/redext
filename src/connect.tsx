@@ -7,7 +7,7 @@ import type { ContextValue } from './types';
 
 const connect = <T extends unknown>(mapStateToProps: any, mapDispatchToProps: any) => (Component: ComponentType<T>): ComponentType<T> => {
   return (props: any) => {
-    const { dispatch }: ContextValue = useContext(Context);
+    const { dispatch }: ContextValue<any> = useContext(Context);
 
     const memoState = useContextSelector(mapStateToProps, {
       isWithSyncExternalStore: false

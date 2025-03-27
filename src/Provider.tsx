@@ -1,11 +1,17 @@
 import React, { useReducer, useRef } from 'react';
-import type { Action } from './types';
 import Context from './Context';
+
+import type { Action, Store, State } from './types';
 
 type Listener = () => void;
 
-const Provider = (props: any) => {
-  const { store, ...providerProps } = props;
+export interface ProviderProps {
+  store: Store<any>
+  initialValue: State<any>
+}
+
+const Provider = (props: ProviderProps) => {
+  const { store, initialValue, ...providerProps } = props;
 
   if (!store) {
     throw new Error('Please use <Provider store={...} initialValue={...}>');
@@ -13,7 +19,7 @@ const Provider = (props: any) => {
 
   const listeners = new Set<Listener>();
 
-  const initialState = store.getState(props.initialValue);
+  const initialState = store.getState(initialValue);
 
   const [state, dispatch] = useReducer(store.getReducer, initialState);
 
@@ -42,9 +48,14 @@ const Provider = (props: any) => {
     dispatch: (arg: Action) => {
       on('onModel', (onModel: any) => {
         const type = arg?.type;
-        const types = type.split('/');
-        const modelName = types[0];
-        const actionName = types[1];
+        const types = type?.split?.('/');
+        const modelName = types?.[0];
+
+        if (!modelName) {
+          return;
+        }
+
+        const actionName = types?.[1];
         const model = models[modelName];
 
         onModel({

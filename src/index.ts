@@ -12,10 +12,10 @@ import useDeepMemo from './hooks/useDeepMemo';
 import isEqual from './utils/isEqual';
 import deepEqual from './utils/deepEqual';
 
-import type { InitConfig } from './types';
+import type { InitConfig, Models, Store } from './types';
 
-const init = (config: InitConfig) => {
-  return createStore(config)
+const init = <TModels extends Models<TModels>>(config: InitConfig<TModels>): Store<TModels> => {
+  return createStore<TModels>(config)
 };
 
 export {

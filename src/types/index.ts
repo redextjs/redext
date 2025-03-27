@@ -1,69 +1,102 @@
-import useContextSelector from "../hooks/useContextSelector";
+export interface Store<TModels extends Models<TModels>> {
+  getState: (initialState?: Record<string, any>) => Record<string, any>;
+  getReducer: (state?: Record<string, any>, action?: Action) => Record<string, any>;
+  getEffect: (dispatch: any, state?: Record<string, any>) => {
+    effects: Record<string, ModelEffects<TModels>>;
+    models: Models<TModels>;
+    dispatch: Dispatch<TModels>;
+    on: (eventName: string, callback: (pluginEvent: any) => void) => void;
+  };
+}
 
-type ModelEffect = {
+export type ExtractDispatchersFromModels<
+  TModels extends Models<TModels>
+> = {
+  [modelName in keyof TModels]: TModels[modelName] extends Model<TModels> ? ModelDispatchers<TModels> : never
+}
+
+export interface ContextDispatch<A extends Action> {
+  <T extends A>(action: T): T
+}
+
+export type Dispatch<TModels extends Models<TModels>> = ContextDispatch<any> & ExtractDispatchersFromModels<TModels>
+
+export type ExtractStateFromModels<
+  TModels extends Models<TModels>
+> = { [modelName in keyof TModels]: TModels[modelName]['state'] }
+
+export type State<TModels extends Models<TModels>> = ExtractStateFromModels<TModels>
+
+export type ModelEffectThis = {
+  [key: string]: (payload?: any) => Action<any>
+}
+
+export type ModelEffect<TModels extends Models<TModels>> = (
+  this: ModelEffectThis,
   payload: Action['payload']
-}
+) => any
 
-type ModelReducer = {
-  state: any
-  payload?: Action['payload']
-}
+export type ModelReducer<TState = any> = (
+  state: TState,
+  payload?: Action['payload'],
+  params?: Action['params']
+) => TState | void
 
-export interface Action {
-  type?: any
-  payload?: any
+export interface Action<TPayload = any> {
+  type?: string
+  payload?: TPayload
   params?: any
 }
 
-export interface Config {
-  models?: Models
+export interface Config<TModels extends Models<TModels>> {
+  models?: TModels
 }
 
-export interface InitConfig {
-  models?: Models
-  plugins?: any
+export interface InitConfig<TModels extends Models<TModels>> {
+  models: TModels
+  plugins?: Plugin<TModels>[]
 }
 
-export interface Models {
-  [key: string]: Model
+export interface Models<TModels extends Models<TModels>> {
+  [key: string]: Model<TModels>
 }
 
-export interface Model {
+export interface Model<TModels extends Models<TModels>, TState = any> {
   name?: string
-  state: any
-  effects?: ModelEffects | ((dispatch?: any) => ModelEffects)
+  state: TState
+  effects?: ModelEffects<TModels> | ((dispatch?: Dispatch<TModels>) => ModelEffects<TModels>)
   reducers?: ModelReducers
 }
 
-export interface ModelEffects {
-  [key: string]: ModelEffect
+export interface ModelEffects<TModels extends Models<TModels>> {
+  [key: string]: ModelEffect<TModels>
 }
 
-export interface ModelReducers {
-  [key: string]: (state?: any, payload?: Action['payload'], params?: Action['params']) => ModelReducer
+export interface ModelReducers<TState = any> {
+  [key: string]: ModelReducer<TState>
 }
 
-export interface ModelDispatchers {
-  state?: any
+export interface ModelDispatchers<TState = any> {
+  state?: TState
 }
 
-export interface Plugins {
-  [key: string]: Plugin
+export interface Plugins<TModels extends Models<TModels>> {
+  [key: string]: Plugin<TModels>
 }
 
-export interface Plugin {
-  config?: Config
+export interface Plugin<TModels extends Models<TModels>> {
+  config?: Config<TModels>
 }
 
 export interface PluginConfig {
   name?: string
 }
 
-export interface ContextValue {
+export interface ContextValue<TModels extends Models<TModels>> {
   subscribe?: any
-  dispatch?: any
+  dispatch?: Dispatch<TModels>
   state?: any
-  effects?: ModelEffects | ((dispatch?: any) => ModelEffects)
+  effects?: ModelEffects<TModels> | ((dispatch?: Dispatch<TModels>) => ModelEffects<TModels>)
   getState?: any
 }
 
